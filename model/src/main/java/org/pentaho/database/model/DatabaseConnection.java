@@ -44,6 +44,8 @@ public class DatabaseConnection implements Serializable, IDatabaseConnection {
 
   String name;
 
+  String level;
+
   String databaseName;
 
   String databasePort;
@@ -205,6 +207,26 @@ public class DatabaseConnection implements Serializable, IDatabaseConnection {
    */
   public String getName() {
     return name;
+  }
+
+  /*
+   * (non-Javadoc)
+   *
+   * @see org.pentaho.database.model.IDatabaseConnection#setLevel(java.lang.String)
+   */
+  @Override
+  public void setLevel( String level ) {
+    this.level = level;
+  }
+
+  /*
+   * (non-Javadoc)
+   *
+   * @see org.pentaho.database.model.IDatabaseConnection#getLevel()
+   */
+  @Override
+  public String getLevel() {
+    return level;
   }
 
   /*
@@ -656,6 +678,9 @@ public class DatabaseConnection implements Serializable, IDatabaseConnection {
   private String encodeProperties() {
     StringBuilder sb = new StringBuilder();
     sb.append( encodeAttribute( "name=", name ) );
+    if ( level != null && !level.isEmpty() ) {
+      sb.append( encodeAttribute( "level=", level ) );
+    }
     sb.append( encodeAttribute( "databaseName=", databaseName ) );
     sb.append( encodeAttribute( "databasePort=", databasePort ) );
     sb.append( encodeAttribute( "hostname=", hostname ) );
@@ -716,7 +741,7 @@ public class DatabaseConnection implements Serializable, IDatabaseConnection {
 
   @Override
   public String toString() {
-    return "DatabaseConnection [id=" + id + ", name=" + name + ", databaseName=" + databaseName + ", databasePort="
+    return "DatabaseConnection [id=" + id + ", name=" + name + ", level=" + level + ", databaseName=" + databaseName + ", databasePort="
       + databasePort + ", hostname=" + hostname + ", username=" + username + ", password=*****"
       + ", dataTablespace=" + dataTablespace + ", indexTablespace=" + indexTablespace + ", streamingResults="
       + streamingResults + ", quoteAllFields=" + quoteAllFields + ", changed=" + changed
