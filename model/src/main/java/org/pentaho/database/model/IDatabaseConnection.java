@@ -45,6 +45,14 @@ public interface IDatabaseConnection extends Serializable {
 
   String getName();
 
+  default void setLevel( String level ) {
+    // no-op default preserves compatibility for implementations that do not track level
+  }
+
+  default String getLevel() {
+    return null;
+  }
+
   void setHostname( String hostname );
 
   String getHostname();
